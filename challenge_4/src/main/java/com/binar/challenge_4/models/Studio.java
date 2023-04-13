@@ -12,13 +12,13 @@ import lombok.Setter;
 public class Studio {
     @Id
     @SequenceGenerator(
-            name = "studio_studio_id_seq",
+            name = "studio_sequence",
             sequenceName = "studio_studio_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
-            generator = "studio_studio_id_seq",
-            strategy = GenerationType.SEQUENCE)
+            generator = "studio_sequence",
+            strategy = GenerationType.AUTO)
     private int studioId;
 
     @Column(name = "name")

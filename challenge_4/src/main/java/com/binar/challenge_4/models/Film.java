@@ -1,8 +1,10 @@
 package com.binar.challenge_4.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -20,7 +22,7 @@ public class Film {
     )
     @GeneratedValue(
             generator = "film_film_id_seq",
-            strategy = GenerationType.SEQUENCE)
+            strategy = GenerationType.AUTO)
     private int filmId;
 
     @Column(name = "title")
@@ -29,16 +31,17 @@ public class Film {
     @Column(name = "description")
     private String description;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "release_date")
-    private String releaseDate;
+    private Date releaseDate;
 
     @Column(name = "actors")
     private List<String> actors;
 
     @Column(name = "score_rating")
-    private String scoreRating;
+    private double scoreRating;
 
-    public Film(String title, String description, String releaseDate, List<String> actors, String scoreRating) {
+    public Film(String title, String description, Date releaseDate, List<String> actors, double scoreRating) {
         this.title = title;
         this.description = description;
         this.releaseDate = releaseDate;

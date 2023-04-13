@@ -35,9 +35,15 @@ public class StudioController {
     }
 
     @PostMapping("/studio")
-    public ResponseEntity<Object> save(@RequestBody Studio film){
-        studioService.save(film);
-        return ResponseHandler.generateResponse(SUCCESS_EDIT_MSG, HttpStatus.OK,film);
+    public ResponseEntity<Object> save(@RequestBody Studio studio){
+        studioService.save(studio);
+        return ResponseHandler.generateResponse(SUCCESS_EDIT_MSG, HttpStatus.OK,studio);
+    }
+
+    @GetMapping("/studio/{id}")
+    public ResponseEntity<Object> findById(@PathVariable("id") int id){
+        var studio = studioService.findById(id);
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,studio);
     }
 
     @PutMapping("/studio")

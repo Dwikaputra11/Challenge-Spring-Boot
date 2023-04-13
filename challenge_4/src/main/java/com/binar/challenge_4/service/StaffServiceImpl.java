@@ -1,34 +1,57 @@
 package com.binar.challenge_4.service;
 
 import com.binar.challenge_4.models.Staff;
+import com.binar.challenge_4.repos.StaffRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StaffServiceImpl implements StaffService{
+    private final StaffRepository staffRepository;
+    @Autowired
+    public StaffServiceImpl(StaffRepository staffRepository) {
+        this.staffRepository = staffRepository;
+    }
     @Override
     public Page<Staff> findAll(Pageable pageable) {
-        return null;
+        return staffRepository.findAll(pageable);
     }
 
     @Override
     public Staff findById(int id) {
-        return null;
+        var staff = staffRepository.findById(id);
+        if(staff.isEmpty()) throw new RuntimeException("Data staff id: " + id + " is not exist.");
+        return staff.get();
     }
 
     @Override
     public Staff save(Staff staff) {
-        return null;
+        if (staff.getName() == null || staff.getName().isEmpty()
+                || staff.getContact() == null || staff.getContact().isEmpty()
+        )  throw new RuntimeException("Data staff is not valid");
+
+        return staffRepository.save(staff);
     }
 
     @Override
     public Staff update(Staff updatedStaff) {
-        return null;
+        var result = staffRepository.findById(updatedStaff.getStaffId());
+
+        if(result.isEmpty())
+            throw new RuntimeException("Data staff id: " + updatedStaff.getStaffId() + " is not exist.");
+
+        var staff = result.get();
+        staff.setContact(updatedStaff.getContact());
+        staff.setName(updatedStaff.getName());
+        return staffRepository.save(staff);
     }
 
     @Override
     public void delete(int id) {
-
+        var staff = staffRepository.findById(id);
+        if(staff.isEmpty()) throw new RuntimeException("Data staff id: " + id + " is not exist.");
+        staffRepository.delete(staff.get());
     }
 }

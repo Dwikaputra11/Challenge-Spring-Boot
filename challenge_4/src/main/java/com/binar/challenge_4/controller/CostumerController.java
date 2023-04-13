@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/api")
 public class CostumerController {
     private final CostumerService costumerService;
     private static final String SUCCESS_RETRIEVE_MSG = "Successfully retrieved data!";
@@ -31,6 +33,12 @@ public class CostumerController {
         filmList = costumerService.findAll(pageable);
 
         return ResponseHandler.generatePagingResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,filmList);
+    }
+
+    @GetMapping("/costumer/{id}")
+    public ResponseEntity<Object> findById(@PathVariable("id") int id){
+        var costumer = costumerService.findById(id);
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,costumer);
     }
 
     @PostMapping("/costumer")

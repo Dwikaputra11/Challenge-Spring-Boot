@@ -10,7 +10,7 @@ public interface FilmService {
 
     Page<Film> findAll(Pageable pageable);
 
-    Optional<Film> findById(int id);
+    Film findById(int id);
 
     Film save(Film film);
 

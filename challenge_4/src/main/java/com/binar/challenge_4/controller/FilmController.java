@@ -36,6 +36,12 @@ public class FilmController {
         return ResponseHandler.generatePagingResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,filmList);
     }
 
+    @GetMapping("/film/{id}")
+    public ResponseEntity<Object> findById(@PathVariable("id") int id){
+        var film = filmService.findById(id);
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,film);
+    }
+
     @PostMapping("/film")
     public ResponseEntity<Object> save(@RequestBody Film film){
         filmService.save(film);

@@ -19,7 +19,7 @@ public class Costumer {
     )
     @GeneratedValue(
             generator = "costumer_costumer_id_seq",
-            strategy = GenerationType.SEQUENCE)
+            strategy = GenerationType.AUTO)
     private int costumerId;
 
     @Column(name = "username")

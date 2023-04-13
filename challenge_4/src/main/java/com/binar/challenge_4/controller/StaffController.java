@@ -35,6 +35,12 @@ public class StaffController {
         return ResponseHandler.generatePagingResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,filmList);
     }
 
+    @GetMapping("/staff/{id}")
+    public ResponseEntity<Object> findById(@PathVariable("id") int id){
+        var staff = staffService.findById(id);
+        return ResponseHandler.generateResponse(SUCCESS_RETRIEVE_MSG, HttpStatus.OK,staff);
+    }
+
     @PostMapping("/staff")
     public ResponseEntity<Object> save(@RequestBody Staff film){
         staffService.save(film);

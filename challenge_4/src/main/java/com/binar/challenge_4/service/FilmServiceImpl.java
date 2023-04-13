@@ -23,22 +23,24 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Optional<Film> findById(int id) {
-        return filmRepository.findById(id);
+    public Film findById(int id) {
+        var film = filmRepository.findById(id);
+        if(film.isEmpty()) throw new RuntimeException("Data film id: " + id + " is not exist.");
+
+        return film.get();
     }
 
     @Override
     public Film save(Film film) {
-        if (film.getTitle() != null && !film.getTitle().isEmpty()
-                && film.getDescription() != null && !film.getDescription().isEmpty()
-                && film.getReleaseDate() != null &&!film.getReleaseDate().isEmpty()
-                && film.getActors() != null
-                && film.getScoreRating() != null && film.getScoreRating().isEmpty()
-        ) {
-            return filmRepository.save(film);
-        } else {
-            throw new RuntimeException("Data film tidak lengkap");
-        }
+        if (film.getTitle() == null || film.getTitle().isEmpty()
+                || film.getDescription() == null || film.getDescription().isEmpty()
+                || film.getReleaseDate() == null
+                || film.getActors() == null
+        ) throw new RuntimeException("Data film tidak lengkap");
+
+        film.setFilmId(0);
+
+        return filmRepository.save(film);
     }
 
     @Override
@@ -62,10 +64,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public void delete(int id) {
         Optional<Film> result = filmRepository.findById(id);
-        if (result.isPresent()) {
-            filmRepository.delete(result.get());
-        } else {
-            throw new RuntimeException("Data film tidak ditemukan");
-        }
+        if (result.isEmpty()) throw new RuntimeException("Data film tidak ditemukan");
+        filmRepository.delete(result.get());
     }
 }
