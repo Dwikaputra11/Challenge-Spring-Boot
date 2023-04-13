@@ -9,15 +9,17 @@ import java.util.List;
 @Setter @Getter
 @NoArgsConstructor
 @ToString
+@Table(name = "film",schema = "public")
 public class Film {
 
     @Id
     @SequenceGenerator(
-            name = "film_id_seq",
-            sequenceName = "film_id_seq"
+            name = "film_film_id_seq",
+            sequenceName = "film_film_id_seq",
+            allocationSize = 1
     )
     @GeneratedValue(
-            generator = "film_id_seq",
+            generator = "film_film_id_seq",
             strategy = GenerationType.SEQUENCE)
     private int filmId;
 

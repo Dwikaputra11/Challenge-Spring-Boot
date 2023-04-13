@@ -8,15 +8,17 @@ import lombok.Setter;
 @Entity
 @Setter @Getter
 @NoArgsConstructor
+@Table(name="costumer", schema = "public")
 public class Costumer {
 
     @Id
     @SequenceGenerator(
-            name = "costumer_id_seq",
-            sequenceName = "film_id_seq"
+            name = "costumer_costumer_id_seq",
+            sequenceName = "costumer_costumer_id_seq",
+            allocationSize = 1
     )
     @GeneratedValue(
-            generator = "film_id_seq",
+            generator = "costumer_costumer_id_seq",
             strategy = GenerationType.SEQUENCE)
     private int costumerId;
 
@@ -26,8 +28,6 @@ public class Costumer {
     @Column(name = "email")
     private String email;
 
-    public Costumer(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
+    @Column(name = "last_update")
+    private String lastUpdate;
 }
