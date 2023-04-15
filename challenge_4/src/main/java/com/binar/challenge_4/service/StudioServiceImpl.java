@@ -31,7 +31,8 @@ public class StudioServiceImpl implements StudioService{
     public Studio save(Studio studio) {
         if (studio.getName() == null || studio.getName().isEmpty())
             throw new RuntimeException("Data studio is not valid");
-
+//        var date = Calendar.getInstance();
+//        studio.setLastUpdate(date.getTime());
         studio.setStudioId(0);
         return studioRepository.save(studio);
     }

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 @Service
 public class StaffServiceImpl implements StaffService{
     private final StaffRepository staffRepository;
@@ -31,6 +33,11 @@ public class StaffServiceImpl implements StaffService{
         if (staff.getName() == null || staff.getName().isEmpty()
                 || staff.getContact() == null || staff.getContact().isEmpty()
         )  throw new RuntimeException("Data staff is not valid");
+
+        staff.setStaffId(0);
+
+//        var date = Calendar.getInstance();
+//        staff.setLastUpdate(date.getTime());
 
         return staffRepository.save(staff);
     }

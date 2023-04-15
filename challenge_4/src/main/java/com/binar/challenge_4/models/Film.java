@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -12,17 +13,20 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Table(name = "film",schema = "public")
-public class Film {
+public class Film implements Serializable {
 
+//    @Id
+//    @SequenceGenerator(
+//            name = "film_film_id_seq",
+//            sequenceName = "film_film_id_seq",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            generator = "film_film_id_seq",
+//            strategy = GenerationType.AUTO)
     @Id
-    @SequenceGenerator(
-            name = "film_film_id_seq",
-            sequenceName = "film_film_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "film_film_id_seq",
-            strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // use identity when data type in db is serial
+    @Column(name = "film_id", nullable = false, unique = true)
     private int filmId;
 
     @Column(name = "title")
@@ -40,6 +44,9 @@ public class Film {
 
     @Column(name = "score_rating")
     private double scoreRating;
+
+//    @OneToMany(mappedBy = "film")
+//    private List<Schedule> schedules;
 
     public Film(String title, String description, Date releaseDate, List<String> actors, double scoreRating) {
         this.title = title;

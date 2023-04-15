@@ -1,25 +1,23 @@
 package com.binar.challenge_4.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.Date;
+
 @Entity
 @Setter @Getter
 @NoArgsConstructor
 @Table(name="costumer", schema = "public")
-public class Costumer {
+public class Costumer implements Serializable {
 
     @Id
-    @SequenceGenerator(
-            name = "costumer_costumer_id_seq",
-            sequenceName = "costumer_costumer_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "costumer_costumer_id_seq",
-            strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "costumer_id", nullable = false, unique = true)
     private int costumerId;
 
     @Column(name = "username")
@@ -28,6 +26,7 @@ public class Costumer {
     @Column(name = "email")
     private String email;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
     @Column(name = "last_update")
-    private String lastUpdate;
+    private Date lastUpdate;
 }

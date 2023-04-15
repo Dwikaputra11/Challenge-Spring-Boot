@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 @Service
 public class CostumerServiceImpl implements CostumerService{
 
@@ -32,6 +34,11 @@ public class CostumerServiceImpl implements CostumerService{
         if (costumer.getUsername() == null || costumer.getUsername().isEmpty()
                 || costumer.getEmail() == null || costumer.getEmail().isEmpty()
         )  throw new RuntimeException("Data costumer is not valid");
+
+        costumer.setCostumerId(0);
+
+        var date = Calendar.getInstance();
+        costumer.setLastUpdate(date.getTime());
 
         return costumerRepository.save(costumer);
     }

@@ -1,25 +1,23 @@
 package com.binar.challenge_4.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.util.Date;
+
 @Entity
 @Setter @Getter
 @NoArgsConstructor
 @Table(name="staff", schema = "public")
-public class Staff {
+public class Staff implements Serializable {
 
     @Id
-    @SequenceGenerator(
-            name = "staff_staff_id_seq",
-            sequenceName = "staff_staff_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "staff_staff_id_seq",
-            strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staff_id", nullable = false, unique = true)
     private int staffId;
 
     @Column(name = "name")
@@ -28,6 +26,7 @@ public class Staff {
     @Column(name = "contact")
     private String contact;
 
-    @Column(name = "last_update")
-    private String lastUpdate;
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", shape = JsonFormat.Shape.STRING)
+//    @Column(name = "last_update")
+//    private Date lastUpdate;
 }
